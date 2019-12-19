@@ -8,9 +8,7 @@ from .models import Post
 from .forms import PostForm
 from django.contrib.auth.models import User
 from rest_framework import generics
-from .serializers import PostSerializer, UserSerializer
 from rest_framework import permissions
-from .permissions import IsOwnerOrReadOnly
 
 
 def index(request):
@@ -104,31 +102,3 @@ def delete_post(request, id):
 
     return redirect("index")
 
-
-class PostList(generics.ListAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-
-
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-
-
-class CreatePostView(generics.CreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
-
-
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
