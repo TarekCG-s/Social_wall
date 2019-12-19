@@ -1,0 +1,29 @@
+{% extends 'users/layout.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+{% for post in posts %}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">{{ post.title }} - {{ post.created_at }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ post.author }}</h6>
+        <p class="card-text">{{ post.content }}</p>
+        {% if post.author.id == user.id or user.is_staff %}
+        <a class="card-link" href="{% url 'update_post' id=post.id %}">Update Post</a>
+        <a class="card-link" href="{% url 'delete_post' id=post.id %}">Delete Post</a>
+        {% endif %}
+
+    </div>
+</div>
+{% endfor %}
+{% if posts.paginator.num_pages > 0 %} <div>
+    {% if posts.has_previous %}
+    <span><a href="?page={{posts.previous_page_number}}">Previous</a></span>
+    {% endif %}
+    <span>Page {{posts.number}} Of {{posts.paginator.num_pages}}</span>
+    {% if posts.has_next %}
+    <span><a href="?page={{ posts.next_page_number }}">Next</a></span>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}

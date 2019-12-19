@@ -1,0 +1,15 @@
+{% extends 'users/layout.html' %}
+{% block title %}Create Post{% endblock %}
+{% block content %}
+<form method="Post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div>
+        {{field.label_tag}} {{field}}
+        <span style="color: red;">{{field.errors}}</span>
+    </div>
+    {% endfor %}
+    <input type="submit" value="Update">
+</form>
+
+{% endblock %}
