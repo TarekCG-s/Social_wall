@@ -15,7 +15,7 @@
     </div>
 </div>
 {% endfor %}
-{% if posts.paginator.num_pages > 0 %} <div>
+{% if posts.paginator.num_pages > 1 %} <div>
     {% if posts.has_previous %}
     <span><a href="?page={{posts.previous_page_number}}">Previous</a></span>
     {% endif %}
