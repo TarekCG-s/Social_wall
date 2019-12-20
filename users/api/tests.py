@@ -37,9 +37,7 @@ class TestCreateUser(APITestCase):
             self.url, {"username": username, "email": email, "password": password}
         )
         self.assertIn("Error", response.data)
-        response = self.client.get(reverse("api_all_users"))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 0)
+        self.assertEqual(User.objects.count(), 0)
 
     def test_create_user(self):
         username = self.faker.first_name()
@@ -49,6 +47,4 @@ class TestCreateUser(APITestCase):
             self.url, {"username": username, "email": email, "password": password}
         )
         self.assertEqual(response.status_code, 201)
-        response = self.client.get(reverse("api_all_users"))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(User.objects.count(), 1)

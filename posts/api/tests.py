@@ -79,8 +79,7 @@ class TestPostDetailOwnerUser(APITestCase):
     def test_delete_post_detail(self):
         response = self.client.delete(self.url)
         self.assertEqual(response.status_code, 204)
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(Post.objects.count(), 0)
 
 
 class TestPostDetailDifferentUser(APITestCase):
@@ -134,4 +133,5 @@ class TestPostCreate(APITestCase):
         self.client.force_authenticate(user=self.user)
         response = self.client.post(self.url, {"title": title, "content": content})
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(Post.objects.count(), 1)
 
