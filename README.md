@@ -1,5 +1,6 @@
 # Overview :
 A social wall where visitors can:
+
     - everyone can view posts published on the wall.
     - register and create their own posts.
     - a user can update or delete his own post.
