@@ -2,13 +2,9 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
 from .models import Post
 from .forms import PostForm
 from django.contrib.auth.models import User
-from rest_framework import generics
-from rest_framework import permissions
 
 
 def index(request):
@@ -63,12 +59,16 @@ def update_post(request, id):
             request, "posts/error.html", {"message": "You can't update that post"}
         )
 
-    form = PostForm(request.POST, instance=post)
+    form = PostForm(
+        request.POST or None,
+        instance=post,
+        initial={"title": post.title, "content": post.content},
+    )
     if request.method == "POST":
         if form.is_valid:
             form.save()
             messages.success(
-                request, f"Your post has been updated",
+                request, "Your post has been updated",
             )
             return redirect("index")
         else:
@@ -88,16 +88,14 @@ def delete_post(request, id):
         post = Post.objects.get(pk=id)
     except Post.DoesNotExist:
         return render(request, "posts/error.html", {"message": "There's no such post"})
-
     if post.author.id != request.user.id:
         return render(
             request, "posts/error.html", {"message": "You can't delete that post"}
         )
-
     else:
         post.delete()
         messages.success(
-            request, f"Your post has been deleted",
+            request, "Your post has been deleted",
         )
 
     return redirect("index")

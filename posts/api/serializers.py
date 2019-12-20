@@ -10,10 +10,3 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ("id", "title", "content", "author", "created_at")
 
-
-class UserSerializer(serializers.ModelSerializer):
-    posts = serializers.PrimaryKeyRelatedField(many=True, queryset=Post.objects.all())
-
-    class Meta:
-        model = User
-        fields = ["id", "username", "posts"]
