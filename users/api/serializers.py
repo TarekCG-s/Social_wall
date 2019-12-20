@@ -21,5 +21,8 @@ class RegisterationSerializer(serializers.ModelSerializer):
         user = User(
             username=self.validated_data["username"], email=self.validated_data["email"]
         )
-        user.set_password(self.validated_data["password"])
+        password = self.validated_data["password"]
+        if len(password) < 8:
+            raise serializers.ValidationError({"Error":"Password must be longer than 8 characters"})
+        user.set_password(password)
         user.save()
