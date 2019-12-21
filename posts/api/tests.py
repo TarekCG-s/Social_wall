@@ -124,8 +124,12 @@ class TestPostCreate(APITestCase):
     def test_create_post_anonymously(self):
         title = self.faker.sentence()
         content = self.faker.paragraph()
-        with self.assertRaises(ValueError):
+        try:
             self.client.post(self.url, {"title": title, "content": content})
+        except Exception:
+            pass
+        finally:
+            self.assertEqual(Post.objects.count(), 0)
 
     def test_create_post_with_user(self):
         title = self.faker.sentence()
