@@ -21,7 +21,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "5heu&ksm!0twd)ryrc=o1gxw%az0@fif#@cuk7kve98*wr#xmi"
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", "5heu&ksm!0twd)ryrc=o1gxw%az0@fif#@cuk7kve98*wr#xmi"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -134,7 +136,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ]
 }
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 
 django_heroku.settings(locals())
