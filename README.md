@@ -1,4 +1,6 @@
+
 # Overview :
+The website was built with Python, Django, DRF and Bootstrap 4.
 A social wall where visitors can:
 
     - everyone can view posts published on the wall.
@@ -14,11 +16,8 @@ A social wall where visitors can:
 # Usage :
 The website was built with Python, Django, DRF and Bootstrap 4.
 
-    - Install requirements.txt packages
+    - Install requirements.txt : pip install -r requirements.txt
     - Add EMAIL_ADDRESS and EMAIL_PASSWORD in the environment variables.
-    - Migrate django database
-    - Run tests
-    - Runserver
-
-
-  
+    - Migrate django database : python manage.py migrate
+    - Run tests : python manage.py test
+    - Runserver: python manage.py runserver
