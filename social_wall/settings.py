@@ -141,4 +141,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 
 django_heroku.settings(locals())
-DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///db.sqlite3")
